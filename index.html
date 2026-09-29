@@ -55,6 +55,8 @@ html, body { background: #fff; -webkit-print-color-adjust: exact; print-color-ad
 .foot { display: flex; gap: 6mm; justify-content: flex-end; align-items: center; font-size: 6pt;
   color: #7a7a80; padding-top: 2mm; font-weight: 600; letter-spacing: .04em; }
 .foot span { display: inline-flex; align-items: center; gap: 1.5mm; }
+/* Small brand mark, bottom left of every month (removable later for registered users) */
+.foot .wm { margin-right: auto; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 6.5pt; letter-spacing: .14em; color: #a9a6a0; }
 .foot .dot { width: 2.2mm; height: 2.2mm; border-radius: 50%; background: #c62828; display: inline-block; }
 .foot svg { width: 4.2mm; height: 2.6mm; }
 .cell .note { font-size: 6pt; font-weight: 700; line-height: 1.2; margin-top: 1mm; white-space: pre-wrap; outline: none; }
@@ -871,7 +873,7 @@ function renderPage(M,idx){
   }
   grid.innerHTML=html; body.appendChild(grid);
   const foot=document.createElement('div'); foot.className='foot';
-  foot.innerHTML=`<span>${FLAG_SVG} Liputuspäivä</span><span><i class="dot"></i> Sunnuntai / pyhäpäivä</span><span>Nimipäivät: Almanakkatoimisto, Helsingin yliopisto</span>`;
+  foot.innerHTML=`<span class="wm">amarald.io</span><span>${FLAG_SVG} Liputuspäivä</span><span><i class="dot"></i> Sunnuntai / pyhäpäivä</span><span>Nimipäivät: Almanakkatoimisto, Helsingin yliopisto</span>`;
   body.appendChild(foot);
   page.appendChild(body);
   page.dataset.idx=idx;

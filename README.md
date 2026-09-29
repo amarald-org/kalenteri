@@ -13,3 +13,5 @@ A printable Finnish A4 wall calendar with a quote and generated artwork for ever
 Live: https://labs.amarald.io/kalenteri
 
 Name days: Almanakkatoimisto, University of Helsinki.
+
+☕ Tykkäätkö? [Tarjoa sumppi](https://buymeacoffee.com/aaroq) · Like it? [Buy me a coffee](https://buymeacoffee.com/aaroq)
