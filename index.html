@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<title>Kalenteri 2027</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Syne:wght@700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@500;700&family=Lora:ital,wght@0,600;1,500&family=Crimson+Pro:ital,wght@0,600;1,500&family=Unbounded:wght@400;600&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,400&family=Josefin+Sans:wght@300;400;600&family=Manrope:wght@500;600;700&family=Outfit:wght@300;500;600;700&family=Playfair+Display:ital,wght@0,700;1,500&family=Poiret+One&display=block" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page {
+  width: 210mm; height: 297mm; position: relative; overflow: hidden;
+  page-break-after: always; break-after: page; background: #fff;
+  font-family: 'Manrope', sans-serif; color: #1c1c1f;
+}
+.page:last-child { page-break-after: auto; break-after: auto; }
+.art { position: absolute; left: 0; top: 0; width: 210mm; height: 99mm; overflow: hidden; }
+.art img { width: 100%; height: 100%; display: block; }
+.quote {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; padding: 0 24mm;
+}
+.quote .q { line-height: 1.22; }
+.quote .a { margin-top: 4.5mm; font-family: 'Outfit', sans-serif; font-weight: 500;
+  font-size: 7.5pt; letter-spacing: .32em; text-transform: uppercase; }
+.quote .a::before, .quote .a::after { content: ''; display: inline-block; width: 8mm; height: 0.25mm;
+  background: currentColor; vertical-align: middle; margin: 0 3mm; opacity: .7; }
+
+.body { position: absolute; left: 11mm; right: 11mm; top: 99mm; bottom: 8mm; display: flex; flex-direction: column; }
+.head { display: flex; align-items: baseline; justify-content: space-between; padding: 5mm 0 3mm; }
+.head .m { font-size: 34pt; line-height: 1; }
+.head .y { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 22pt; letter-spacing: .12em; }
+.dow { display: grid; grid-template-columns: 7mm repeat(7, 1fr); font-family: 'Outfit', sans-serif;
+  font-weight: 600; font-size: 7.5pt; letter-spacing: .2em; padding-bottom: 1.6mm; }
+.dow div { padding-left: 1.6mm; }
+.dow .wk { padding-left: 0; text-align: center; letter-spacing: 0; font-weight: 500; opacity: .55; }
+.grid { flex: 1; display: grid; grid-template-columns: 7mm repeat(7, 1fr); border-top: 0.5mm solid; }
+.grid > div { border-bottom: 0.2mm solid #d9d6d0; position: relative; min-width: 0; }
+.grid .wn { font-family: 'Outfit', sans-serif; font-size: 7pt; font-weight: 500; color: #8a8a90;
+  text-align: center; padding-top: 2.4mm; border-right: 0.2mm solid #d9d6d0; }
+.cell { border-right: 0.2mm solid #ebe8e3; padding: 1.4mm 1.5mm 1.3mm; display: flex; flex-direction: column; overflow: hidden; }
+.cell:nth-child(8n) { border-right: none; }
+.cell.we { background: #f7f5f1; }
+.cell.out { background: #fff; }
+.cell.out .n { color: #d3d0ca; }
+.cell .n { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 14pt; line-height: 1; }
+.cell.red .n { color: #c62828; }
+.cell .ev { font-size: 5.6pt; font-weight: 700; line-height: 1.18; margin-top: 1.1mm; hyphens: manual; }
+.cell .ev.minor { font-weight: 600; color: #6b6b72; }
+.cell .names { margin-top: auto; font-size: 5.7pt; line-height: 1.22; color: #4a4a52; font-weight: 500; }
+.flag { position: absolute; top: 1.6mm; right: 1.5mm; width: 5.2mm; height: 3.2mm; }
+.foot { display: flex; gap: 6mm; justify-content: flex-end; align-items: center; font-size: 6pt;
+  color: #7a7a80; padding-top: 2mm; font-weight: 600; letter-spacing: .04em; }
+.foot span { display: inline-flex; align-items: center; gap: 1.5mm; }
+.foot .dot { width: 2.2mm; height: 2.2mm; border-radius: 50%; background: #c62828; display: inline-block; }
+.foot svg { width: 4.2mm; height: 2.6mm; }
+.cell .note { font-size: 6pt; font-weight: 700; line-height: 1.2; margin-top: 1mm; white-space: pre-wrap; outline: none; }
+.cell .note:empty { display: none; }
+
+/* ---- screen only ---- */
+@media screen {
+  :root { --bar-bg: #1d1c20; --bar-fg: #f4f1ea; --accent: #e0b75e; --desk: #dedad3; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --desk: #2a292d; } }
+  :root[data-theme="dark"] { --desk: #2a292d; }
+  html, body { background: var(--desk); }
+  #root { padding: 150px 16px 60px; display: flex; flex-direction: column; align-items: center; gap: 12mm; }
+  .page { box-shadow: 0 6px 30px rgba(0,0,0,.18); flex: none; }
+  #bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; background: var(--bar-bg); color: var(--bar-fg);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 12px 16px; font-family: 'Manrope', sans-serif; }
+  #bar .brand { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 18px; margin-right: 10px; }
+  #bar .brand span { font-weight: 300; opacity: .7; }
+  #bar button { font: 600 14px 'Manrope', sans-serif; padding: 8px 14px; border-radius: 8px; border: 1px solid #55525c;
+    background: #2c2b31; color: var(--bar-fg); cursor: pointer; }
+  #bar button:hover { border-color: var(--accent); }
+  #bar button.primary { background: var(--accent); color: #1d1c20; border-color: var(--accent); }
+  #bar button.ghost { background: transparent; }
+  #bar .hint { flex-basis: 100%; font-size: 12px; line-height: 1.45; opacity: .78; max-width: 1100px; }
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; font: 600 18px 'Manrope', sans-serif;
+    color: #555; background: var(--desk); z-index: 5; }
+  body.ready #loading { display: none; }
+  body.editing [data-k] { outline: 1px dashed rgba(90,110,255,.55); outline-offset: 1px; border-radius: 2px; cursor: text; }
+  body.editing [data-k]:focus { outline: 2px solid #4a5fff; background: rgba(255,255,255,.35); }
+  body.editing .cell .note:empty { display: block; min-height: 3mm; }
+  body.editing .cell .note:empty::before { content: '+ merkintä'; color: #aab; font-weight: 500; }
+  body.editing .cell .names:empty::before { content: '+'; color: #aab; }
+}
+@media screen and (max-width: 820px) { .page { zoom: .45; } #root { padding-top: 220px; } }
+@media print { .noprint { display: none !important; } }
+</style>
+</head>
+<body>
+<div id="bar" class="noprint">
+  <div class="brand">Kalenteri 2027 <span>· lainaukset</span></div>
+  <button id="btnEdit">✎ Muokkaa</button>
+  <button id="btnPrint" class="primary">🖨 Tulosta</button>
+  <button id="btnReset" class="ghost">↺ Palauta alkuperäinen</button>
+  <div class="hint">Muokkaa-tilassa voit klikata mitä tahansa lainausta, kirjoittajaa, kuukauden nimeä, juhlapäivää tai nimipäivää ja kirjoittaa päälle. Jokaisessa päivässä on myös tyhjä rivi omille merkinnöille. Muutokset tallentuvat tähän selaimeen.<br><b>Tulostus:</b> Paperi A4 · Mittakaava 100 % · Marginaalit: Ei mitään · Ylä- ja alatunnisteet: pois · Taustagrafiikka: päälle.</div>
+</div>
+<div id="loading" class="noprint">Piirretään kuvituksia…</div>
+<div id="root"></div>
+<script>
+const NAMEDAYS = {"9-1": ["Pirkka"], "9-2": ["Sinikka", "Sini", "Justus"], "9-3": ["Soile", "Soili", "Soila"], "9-4": ["Ansa"], "9-5": ["Roni", "Mainio"], "9-6": ["Asko", "Felix"], "9-7": ["Miro", "Arho", "Arhippa", "Milo"], "9-8": ["Taimi"], "9-9": ["Eevert", "Isto", "Vertti"], "9-10": ["Kalevi", "Kaleva"], "9-11": ["Santeri", "Aleksanteri", "Santtu", "Aleksandra", "Ale", "Ali", "Sandra"], "9-12": ["Valma", "Vilja", "Neo"], "9-13": ["Orvo"], "9-14": ["Iida", "Iita", "Isla"], "9-15": ["Sirpa"], "9-16": ["Hilla", "Hellevi", "Hille", "Hillevi"], "9-17": ["Aili", "Aila"], "9-18": ["Tyyne", "Tytti", "Tyyni"], "9-19": ["Reija"], "9-20": ["Varpu", "Vaula"], "9-21": ["Mervi"], "9-22": ["Mauri"], "9-23": ["Mielikki", "Miisa", "Minja"], "9-24": ["Alvar", "Auno"], "9-25": ["Kullervo"], "9-26": ["Kuisma"], "9-27": ["Vesa"], "9-28": ["Arja", "Lenni", "Leon"], "9-29": ["Mikko", "Mika", "Mikael", "Miki", "Mikaela", "Miika", "Miikka", "Miko", "Miska"], "9-30": ["Sirja", "Sorja", "Siru"], "10-1": ["Rauno", "Rainer", "Raine"], "10-2": ["Valio"], "10-3": ["Raimo"], "10-4": ["Saija", "Saila", "Sinna", "Frans", "Siina"], "10-5": ["Inkeri", "Inka"], "10-6": ["Pinja", "Minttu"], "10-7": ["Pirkko", "Pirjo", "Birgitta", "Pirita", "Piritta", "Pipsa"], "10-8": ["Hilja"], "10-9": ["Ilona"], "10-10": ["Aleksi", "Aleksis"], "10-11": ["Otso", "Ohto"], "10-12": ["Aarre", "Aarto"], "10-13": ["Taina", "Tanja", "Taija"], "10-14": ["Elsa", "Else", "Elsi"], "10-15": ["Helvi", "Heta"], "10-16": ["Sirkka", "Sirkku", "Luna", "Stella"], "10-17": ["Saana", "Saini", "Saaga"], "10-18": ["Satu", "Säde", "Luukas", "Luka"], "10-19": ["Uljas"], "10-20": ["Kasperi", "Kauno", "Jasper", "Jesper", "Kasper"], "10-21": ["Ursula"], "10-22": ["Anja", "Anita", "Anniina", "Nita", "Anitta", "Anette"], "10-23": ["Severi"], "10-24": ["Rasmus", "Asmo"], "10-25": ["Sointu"], "10-26": ["Niina", "Nina", "Amanda", "Manta", "Ninni"], "10-27": ["Helli", "Hellin", "Helle", "Hellä"], "10-28": ["Simo"], "10-29": ["Alfred", "Urmas"], "10-30": ["Eila"], "10-31": ["Arto", "Arttu", "Artturi"], "11-1": ["Pyry", "Lyly"], "11-2": ["Topi", "Topias"], "11-3": ["Terho"], "11-4": ["Hertta"], "11-5": ["Reima"], "11-6": ["Mimosa"], "11-7": ["Kevin", "Taisto", "Erin"], "11-8": ["Aatos"], "11-9": ["Teuvo", "Teo"], "11-10": ["Martin", "Martti"], "11-11": ["Panu"], "11-12": ["Virpi"], "11-13": ["Kristian", "Ano"], "11-14": ["Iiris"], "11-15": ["Janina", "Janika", "Janita", "Janette"], "11-16": ["Aarne", "Aarno", "Aarni"], "11-17": ["Eino", "Einari"], "11-18": ["Tenho", "Jousia", "Max"], "11-19": ["Liisa", "Elisa", "Eliisa", "Elisabet", "Elise", "Liisi"], "11-20": ["Jari", "Jalmari", "Jare"], "11-21": ["Hilma"], "11-22": ["Silja", "Selja", "Seela", "Cecilia"], "11-23": ["Ismo"], "11-24": ["Lempi", "Lemmikki", "Sivi"], "11-25": ["Katri", "Kaija", "Katja", "Kaisa", "Kati", "Kaarina", "Kaisu", "Katariina", "Katriina", "Riina"], "11-26": ["Sisko"], "11-27": ["Hilkka"], "11-28": ["Heini", "Kaisla"], "11-29": ["Aimo"], "11-30": ["Antti", "Antero", "Atte", "Andreas"], "12-1": ["Oskari", "Oskar"], "12-2": ["Anelma", "Unelma", "Unna"], "12-3": ["Meri", "Vellamo"], "12-4": ["Airi", "Aira"], "12-5": ["Selma"], "12-6": ["Niilo", "Niko", "Niki", "Nikolas", "Niklas", "Nikolai", "Niila"], "12-7": ["Sampsa"], "12-8": ["Kyllikki", "Kylli"], "12-9": ["Anna", "Anne", "Anni", "Anu", "Annu", "Anneli", "Annika", "Annikki", "Annukka"], "12-10": ["Jutta"], "12-11": ["Tatu", "Taneli", "Daniel", "Daniela"], "12-12": ["Tuovi"], "12-13": ["Seija"], "12-14": ["Jouko"], "12-15": ["Heimo", "Nooa"], "12-16": ["Auli", "Aulikki", "Aada", "Adele"], "12-17": ["Raakel"], "12-18": ["Aapo", "Rami", "Aappo"], "12-19": ["Iiro", "Iisakki", "Iikka", "Isko"], "12-20": ["Benjamin", "Kerkko"], "12-21": ["Tuomas", "Tomi", "Tommi", "Tuomo"], "12-22": ["Raafael"], "12-23": ["Senni", "Noel"], "12-24": ["Aatami", "Eeva", "Eevi", "Eveliina"], "12-25": [], "12-26": ["Tapani", "Teppo", "Tahvo"], "12-27": ["Hannu", "Hannes", "Hans"], "12-28": ["Piia"], "12-29": ["Rauha"], "12-30": ["Taavetti", "Taavi", "Daavid"], "12-31": ["Sylvester", "Silvo"], "1-1": [], "1-2": ["Aapeli"], "1-3": ["Elmo", "Elmeri", "Elmer"], "1-4": ["Ruut", "Tiitus"], "1-5": ["Lea", "Leea"], "1-6": ["Harri"], "1-7": ["Aku", "Aukusti", "August"], "1-8": ["Titta", "Hilppa"], "1-9": ["Veikko", "Veli", "Veijo", "Veikka"], "1-10": ["Nyyrikki"], "1-11": ["Kari", "Karri"], "1-12": ["Toini"], "1-13": ["Nuutti"], "1-14": ["Sakari", "Saku", "Sasu"], "1-15": ["Solja"], "1-16": ["Ilmari", "Ilmo"], "1-17": ["Toni", "Anton", "Antto", "Anttoni"], "1-18": ["Laura"], "1-19": ["Heikki", "Henrik", "Henna", "Henni", "Henriikka", "Henri", "Henrikki"], "1-20": ["Sebastian"], "1-21": ["Aune", "Oona", "Auni", "Netta"], "1-22": ["Visa"], "1-23": ["Enni", "Eine", "Eini", "Enna"], "1-24": ["Senja"], "1-25": ["Paavo", "Pauli", "Paulus", "Paavali", "Paul"], "1-26": ["Joonatan"], "1-27": ["Viljo"], "1-28": ["Kalle", "Kaarlo", "Kaarle", "Mies"], "1-29": ["Valtteri"], "1-30": ["Irja"], "1-31": ["Alli"], "2-1": ["Riitta"], "2-2": ["Jemina", "Aamu", "Lumi"], "2-3": ["Valo", "Hugo"], "2-4": ["Armi", "Ronja", "Mio"], "2-5": ["Asser"], "2-6": ["Terhi", "Teija", "Tiia", "Tea", "Terhikki"], "2-7": ["Riku", "Rikhard"], "2-8": ["Laina"], "2-9": ["Raija", "Raisa"], "2-10": ["Elina", "Ella", "Ellen", "Elle"], "2-11": ["Talvikki", "Iisa", "Isabella"], "2-12": ["Elma", "Elmi"], "2-13": ["Sulo", "Sulho"], "2-14": ["Voitto", "Valentin", "Tino"], "2-15": ["Sipi", "Sippo"], "2-16": ["Kai", "Kaius"], "2-17": ["Väinö", "Väinämö", "Karita", "Rita"], "2-18": ["Kaino"], "2-19": ["Eija"], "2-20": ["Heli", "Helinä", "Hely", "Heljä"], "2-21": ["Alva", "Keijo"], "2-22": ["Tuulikki", "Tuuli", "Tuulia", "Hilda"], "2-23": ["Aslak"], "2-24": ["Matti", "Matias"], "2-25": ["Jessica", "Tuija", "Tuire", "Vanessa"], "2-26": ["Nestori"], "2-27": ["Torsti"], "2-28": ["Onni", "Sisu"], "3-1": ["Alpo", "Alpi", "Alvi"], "3-2": ["Virve", "Virva", "Fanni", "Fiona"], "3-3": ["Kauko"], "3-4": ["Ari", "Arsi", "Atro"], "3-5": ["Leila", "Laila"], "3-6": ["Rolf", "Tarmo"], "3-7": ["Tarja", "Taru", "Taika"], "3-8": ["Vilppu"], "3-9": ["Auvo", "Edvin"], "3-10": ["Aurora", "Aura", "Auri"], "3-11": ["Kalervo"], "3-12": ["Reijo", "Reko"], "3-13": ["Erno", "Ernesti", "Tarvo"], "3-14": ["Matilda", "Tilda", "Mette", "Malla"], "3-15": ["Risto"], "3-16": ["Ilkka"], "3-17": ["Kerttu", "Kerttuli"], "3-18": ["Eetu", "Edvard", "Eppu"], "3-19": ["Juuso", "Josefiina", "Jose", "Joosef", "Jooseppi", "Joose"], "3-20": ["Aki", "Kim", "Joakim", "Jooa", "Kimi", "Jaakkima"], "3-21": ["Pentti"], "3-22": ["Vihtori", "Viktor"], "3-23": ["Akseli", "Selina"], "3-24": ["Gabriel", "Kaapo", "Kaappo", "Kaapro"], "3-25": ["Aija", "Aava"], "3-26": ["Manu", "Manne", "Immanuel", "Immo"], "3-27": ["Sauli", "Saul"], "3-28": ["Armas"], "3-29": ["Jouni", "Joni", "Joonas", "Joona", "Jonne", "Jonni"], "3-30": ["Usko"], "3-31": ["Irma", "Irmeli", "Aamos"], "4-1": ["Raita", "Pulmu", "Peppi"], "4-2": ["Pellervo"], "4-3": ["Sampo", "Veeti"], "4-4": ["Ukko"], "4-5": ["Irene", "Irina", "Ira", "Iro"], "4-6": ["Ville", "Vilho", "Viljami", "Jami", "Vilhelm", "Vili"], "4-7": ["Allan", "Ahvo"], "4-8": ["Suoma", "Suometar"], "4-9": ["Elias", "Eelis", "Eeli", "Eljas", "Elia", "Eliel", "Ilja"], "4-10": ["Tero"], "4-11": ["Verna", "Minea", "Minka"], "4-12": ["Julia", "Julius", "Janna", "Juliaana", "Janni", "Juulia", "Juuli"], "4-13": ["Tellervo"], "4-14": ["Taito"], "4-15": ["Linda", "Tuomi"], "4-16": ["Jalo", "Patrik"], "4-17": ["Otto"], "4-18": ["Valto", "Valdemar"], "4-19": ["Pilvi", "Pälvi"], "4-20": ["Lauha", "Neela", "Nella"], "4-21": ["Camilla", "Anssi", "Anselmi"], "4-22": ["Alina", "Aida"], "4-23": ["Yrjö", "Jyrki", "Jyri", "Jiri", "Jori", "Yrjänä"], "4-24": ["Pertti", "Albert", "Altti"], "4-25": ["Markku", "Marko", "Markus"], "4-26": ["Terttu", "Tessa", "Teresa"], "4-27": ["Merja", "Meea"], "4-28": ["Ilpo", "Tuure", "Ilppo"], "4-29": ["Teijo"], "4-30": ["Mirja", "Miia", "Mira", "Mirva", "Mirella", "Mirjami", "Mirka", "Mirkka"], "5-1": ["Vappu", "Valpuri"], "5-2": ["Vivian", "Vuokko", "Viivi"], "5-3": ["Outi", "Linus"], "5-4": ["Roosa", "Ruusu", "Rosa"], "5-5": ["Maini", "Melina", "Melissa"], "5-6": ["Ylermi"], "5-7": ["Helmi", "Kastehelmi"], "5-8": ["Heino"], "5-9": ["Timo", "Timi"], "5-10": ["Aino", "Aini", "Aina", "Ainikki"], "5-11": ["Osmo"], "5-12": ["Lotta"], "5-13": ["Kukka", "Floora"], "5-14": ["Tuula"], "5-15": ["Sofia", "Sonja", "Sohvi"], "5-16": ["Ester", "Essi", "Esteri"], "5-17": ["Maila", "Rebekka", "Maili", "Mailis", "Maisa"], "5-18": ["Erkki", "Eero", "Eerika", "Eerik", "Eerikki", "Erkka"], "5-19": ["Emilia", "Emma", "Mila", "Milena", "Amalia", "Emmi", "Milja", "Milka", "Milla", "Amelia"], "5-20": ["Lilian", "Lilja", "Karoliina", "Lila", "Lili", "Lilli", "Lilia"], "5-21": ["Kosti", "Konsta", "Konstantin"], "5-22": ["Hemminki", "Hemmo"], "5-23": ["Lyydia", "Lyyli"], "5-24": ["Tuukka", "Touko"], "5-25": ["Urpo"], "5-26": ["Minna", "Vilma", "Minni", "Miina", "Mimmi", "Vilhelmiina"], "5-27": ["Ritva"], "5-28": ["Alma"], "5-29": ["Oiva", "Oliver", "Olivia", "Livia"], "5-30": ["Pasi"], "5-31": ["Helka", "Helga"], "6-1": ["Teemu", "Nikodemus"], "6-2": ["Venla"], "6-3": ["Orvokki", "Viola"], "6-4": ["Toivo"], "6-5": ["Sulevi"], "6-6": ["Kustaa", "Kyösti", "Kustavi"], "6-7": ["Suvi", "Roope", "Robert", "Robin"], "6-8": ["Salomon", "Salomo"], "6-9": ["Ensio"], "6-10": ["Seppo"], "6-11": ["Impi", "Immi"], "6-12": ["Esko"], "6-13": ["Raili", "Raila"], "6-14": ["Kielo", "Pihla"], "6-15": ["Mona", "Vieno", "Moona", "Viena"], "6-16": ["Päivi", "Päivikki", "Päivä"], "6-17": ["Urho"], "6-18": ["Tapio"], "6-19": ["Siiri"], "6-20": ["Into"], "6-21": ["Ahti", "Ahto"], "6-22": ["Paula", "Pauliina", "Liina"], "6-23": ["Aatu", "Aatto", "Aadolf"], "6-24": ["Johannes", "Juhani", "Jussi", "Jani", "Janne", "Juha", "Juhana", "Juho", "Jukka"], "6-25": ["Uuno"], "6-26": ["Jorma", "Jarmo", "Jarkko", "Jarno", "Jere", "Jeremias"], "6-27": ["Elviira", "Elvi"], "6-28": ["Leo"], "6-29": ["Pekka", "Petri", "Petra", "Peetu", "Pekko", "Petteri", "Pietari", "Petrus", "Petja"], "6-30": ["Päiviö", "Päivö"], "7-1": ["Aaro", "Aaron"], "7-2": ["Maria", "Maija", "Mari", "Meeri", "Kukka-Maaria", "Maaria", "Maiju", "Maikki", "Marika", "Riia"], "7-3": ["Arvo"], "7-4": ["Ulla", "Ulpu"], "7-5": ["Unto", "Untamo"], "7-6": ["Esa", "Esaias"], "7-7": ["Klaus", "Launo"], "7-8": ["Turo", "Turkka"], "7-9": ["Jasmin", "Ilta", "Jade", "Nanna", "Jasmiina"], "7-10": ["Saima", "Saimi"], "7-11": ["Elli", "Noora", "Nelli", "Eleonoora", "Elea"], "7-12": ["Hermanni", "Herkko", "Herman"], "7-13": ["Joel", "Ilari", "Lari"], "7-14": ["Aliisa", "Alisa", "Alissa"], "7-15": ["Rauni", "Rauna"], "7-16": ["Reino", "Rene"], "7-17": ["Ossi", "Ossian"], "7-18": ["Riikka"], "7-19": ["Sari", "Saara", "Sara", "Sarita", "Salla", "Salli"], "7-20": ["Marketta", "Maarit", "Maaret", "Margareeta", "Reeta", "Reetta"], "7-21": ["Jonna", "Johanna", "Hanna", "Jenni", "Hanne", "Hannele", "Jenna", "Joanna"], "7-22": ["Leena", "Leeni", "Lenita", "Matleena"], "7-23": ["Olga", "Oili"], "7-24": ["Tiina", "Kirsti", "Kirsi", "Kiia", "Krista", "Kristiina", "Tinja"], "7-25": ["Jaakko", "Jimi", "Jasu", "Jaakob", "Jaakoppi"], "7-26": ["Martta"], "7-27": ["Heidi"], "7-28": ["Atso"], "7-29": ["Olavi", "Olli", "Uolevi", "Uoti", "Oula"], "7-30": ["Asta"], "7-31": ["Helena", "Elena"], "8-1": ["Maire"], "8-2": ["Kimmo"], "8-3": ["Nea", "Linnea", "Neea", "Vanamo"], "8-4": ["Veera"], "8-5": ["Salme", "Sanelma"], "8-6": ["Toimi", "Keimo"], "8-7": ["Lahja"], "8-8": ["Sylvi", "Sylvia", "Silva"], "8-9": ["Erja", "Eira", "Nadja"], "8-10": ["Lauri", "Lasse", "Lassi"], "8-11": ["Sanna", "Susanna", "Sanni", "Susanne"], "8-12": ["Klaara", "Kiira", "Kira"], "8-13": ["Jesse", "Okko"], "8-14": ["Onerva", "Kanerva"], "8-15": ["Marjatta", "Marja", "Jaana", "Marianna", "Marianne", "Marita", "Maritta", "Marjaana", "Marjo", "Marjukka", "Marjut", "Jatta", "Marju"], "8-16": ["Aulis"], "8-17": ["Verneri", "Venni"], "8-18": ["Leevi"], "8-19": ["Mauno", "Maunu"], "8-20": ["Sami", "Samuli", "Samu", "Samuel"], "8-21": ["Soini", "Veini"], "8-22": ["Iivari", "Iivo"], "8-23": ["Signe", "Varma"], "8-24": ["Perttu", "Bertta"], "8-25": ["Loviisa"], "8-26": ["Ilmi", "Ilma", "Ilmatar"], "8-27": ["Rauli"], "8-28": ["Tauno"], "8-29": ["Iina", "Iines", "Inari", "Inna"], "8-30": ["Eemil", "Eemeli", "Eemi"], "8-31": ["Arvi"]};
+
+// ---------- calendar data ----------
+const EVENTS = {
+  '2027-1-1': {t: 'Uuden­vuodenpäivä', red: 1},
+  '2027-1-6': {t: 'Loppiainen', red: 1},
+  '2027-2-5': {t: 'J. L. Runebergin päivä', flag: 1},
+  '2027-2-6': {t: 'Saamelaisten kansallispäivä', minor: 1},
+  '2027-2-7': {t: 'Laskiais­sunnuntai', minor: 1},
+  '2027-2-9': {t: 'Laskiais­tiistai', minor: 1},
+  '2027-2-14': {t: 'Ystävänpäivä', minor: 1},
+  '2027-2-28': {t: 'Kalevalan päivä, suomalaisen kulttuurin päivä', flag: 1},
+  '2027-3-19': {t: 'Minna Canthin päivä, tasa-arvon päivä', flag: 1},
+  '2027-3-21': {t: 'Palmu­sunnuntai', minor: 1},
+  '2027-3-25': {t: 'Kiirastorstai', minor: 1},
+  '2027-3-26': {t: 'Pitkäperjantai', red: 1},
+  '2027-3-28': {t: 'Pääsiäispäivä', red: 1, t2: 'Kesäaika alkaa'},
+  '2027-3-29': {t: '2. pääsiäispäivä', red: 1},
+  '2027-4-9': {t: 'Mikael Agricolan päivä, suomen kielen päivä', flag: 1},
+  '2027-4-18': {t: 'Eduskunta­vaalit', flag: 1},
+  '2027-4-27': {t: 'Kansallinen veteraanipäivä', flag: 1},
+  '2027-4-30': {t: 'Vappuaatto', minor: 1},
+  '2027-5-1': {t: 'Vappu, suomalaisen työn päivä', flag: 1, red: 1},
+  '2027-5-6': {t: 'Helatorstai', red: 1},
+  '2027-5-9': {t: 'Äitienpäivä', flag: 1, t2: 'Eurooppa-päivä'},
+  '2027-5-12': {t: 'J. V. Snellmanin päivä, suomalaisuuden päivä', flag: 1},
+  '2027-5-16': {t: 'Helluntaipäivä', red: 1, flag: 1, t2: 'Kaatuneitten muistopäivä'},
+  '2027-6-4': {t: 'Puolustusvoimain lippujuhlan päivä', flag: 1},
+  '2027-6-25': {t: 'Juhannusaatto', red: 1},
+  '2027-6-26': {t: 'Juhannuspäivä, Suomen lipun päivä', flag: 1, red: 1},
+  '2027-7-6': {t: 'Eino Leinon päivä, runon ja suven päivä', flag: 1},
+  '2027-8-28': {t: 'Suomen luonnon päivä', flag: 1},
+  '2027-10-1': {t: 'Miina Sillanpään ja kansalais­vaikuttamisen päivä', flag: 1},
+  '2027-10-3': {t: 'Mikkelinpäivä', minor: 1},
+  '2027-10-10': {t: 'Aleksis Kiven päivä, suomalaisen kirjallisuuden päivä', flag: 1},
+  '2027-10-24': {t: 'YK:n päivä', flag: 1},
+  '2027-10-31': {t: 'Talviaika alkaa', minor: 1},
+  '2027-11-6': {t: 'Pyhäinpäivä', red: 1, flag: 1, t2: 'Svenska dagen'},
+  '2027-11-14': {t: 'Isänpäivä', flag: 1},
+  '2027-11-20': {t: 'Lapsen oikeuksien päivä', flag: 1},
+  '2027-12-6': {t: 'Itsenäisyys­päivä', flag: 1, red: 1},
+  '2027-12-8': {t: 'Jean Sibeliuksen päivä, suomalaisen musiikin päivä', flag: 1},
+  '2027-12-13': {t: 'Lucian päivä', minor: 1},
+  '2027-12-24': {t: 'Jouluaatto', red: 1},
+  '2027-12-25': {t: 'Joulupäivä', red: 1},
+  '2027-12-26': {t: 'Tapaninpäivä', red: 1},
+  '2027-12-31': {t: 'Uuden­vuodenaatto', minor: 1},
+};
+
+const FLAG_SVG = '<svg viewBox="0 0 18 11" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="11" fill="#fff" stroke="#c9ced6" stroke-width=".5"/><rect x="5" width="3" height="11" fill="#002f6c"/><rect y="4" width="18" height="3" fill="#002f6c"/></svg>';
+
+const MONTHS = [
+  { y: 2027, m: 1, seed: 4, name: 'Tammikuu', art: 'deco', accent: '#a98232', rule: '#0b1526',
+    font: "'Josefin Sans', sans-serif", fw: 300, italic: false, upper: true, qsize: '13pt', qpad: '40mm', qcolor: '#f6ecd4', acolor: '#d8b563',
+    titleFont: "'Poiret One', sans-serif",
+    q: 'Tuhannen mailin matka alkaa yhdestä askeleesta.', a: 'Laozi' },
+  { y: 2027, m: 2, seed: 5, name: 'Helmikuu', art: 'marble', accent: '#b3486e', rule: '#1f3b4d',
+    font: "'DM Serif Display', serif", fw: 400, italic: true, qsize: '22pt', qpad: '36mm', qcolor: '#1f2f3d', acolor: '#b3486e',
+    q: 'Sielu värjäytyy ajatustensa väriseksi.', a: 'Marcus Aurelius' },
+  { y: 2027, m: 3, name: 'Maaliskuu', art: 'bauhaus', accent: '#e4572e', rule: '#1b1b1e',
+    font: "'Syne', sans-serif", fw: 700, italic: false, qsize: '17pt', qpad: '46mm', qcolor: '#1b1b1e', acolor: '#2e5eaa',
+    q: 'Tutkimaton elämä ei ole elämisen arvoinen.', a: 'Sokrates' },
+  { y: 2027, m: 4, name: 'Huhtikuu', art: 'watercolor', accent: '#4f8a5b', rule: '#2f4a3a',
+    font: "'Libre Baskerville', serif", fw: 400, italic: true, qsize: '17pt', qpad: '36mm', qcolor: '#2f3e36', acolor: '#b0567a',
+    q: 'Anna itsesi hiljaa kulkeutua sen puoleen, mitä todella rakastat.', a: 'Rumi' },
+  { y: 2027, m: 5, name: 'Toukokuu', art: 'retro', accent: '#d9544d', rule: '#2b193d',
+    font: "'Space Grotesk', sans-serif", fw: 500, italic: false, qsize: '17pt', qpad: '34mm', qcolor: '#2b193d', acolor: '#8a2c5b', qtop: '-10mm',
+    q: 'Olemme sitä, mitä toistuvasti teemme. Erinomaisuus ei siis ole teko vaan tapa.', a: 'Will Durant' },
+  { y: 2027, m: 6, name: 'Kesäkuu', art: 'midsummer', accent: '#d9733a', rule: '#1b2a4a',
+    font: "'Playfair Display', serif", fw: 500, italic: true, qsize: '19pt', qpad: '32mm', qcolor: '#fff4e6', acolor: '#ffd28a', qtop: '-14mm',
+    q: 'Elä jokainen vuodenaika sen ohi kulkiessa: hengitä sen ilmaa, juo sen juomaa, maista sen hedelmää.', a: 'Henry David Thoreau' },
+  { y: 2027, m: 7, name: 'Heinäkuu', art: 'waves', accent: '#2f5d8a', rule: '#1d3557',
+    font: "'Lora', serif", fw: 500, italic: true, qsize: '25pt', qpad: '34mm', qcolor: '#1d3557', acolor: '#c0392b', qtop: '-11mm',
+    q: 'Mikään suuri ei synny yhtäkkiä.', a: 'Epiktetos' },
+  { y: 2027, m: 8, name: 'Elokuu', art: 'topo', accent: '#9a5b34', rule: '#3d2b1f',
+    font: "'Crimson Pro', serif", fw: 500, italic: true, qsize: '23pt', qpad: '34mm', qcolor: '#3d2b1f', acolor: '#9a5b34',
+    q: 'Ei ole väliä, kuinka hitaasti kuljet, kunhan et pysähdy.', a: 'Kungfutse' },
+  { y: 2027, m: 9, name: 'Syyskuu', art: 'mosaic', accent: '#bb3e03', rule: '#1b1b1b',
+    font: "'Unbounded', sans-serif", fw: 400, italic: false, qsize: '14pt', qpad: '44mm', qcolor: '#f7efe2', acolor: '#ee9b00',
+    q: 'Kokonaisuus on enemmän kuin osiensa summa.', a: 'Aristoteles' },
+  { y: 2027, m: 10, name: 'Lokakuu', art: 'papercut', accent: '#b5502d', rule: '#4a1e18',
+    font: "'Fraunces', serif", fw: 400, italic: true, qsize: '21pt', qpad: '34mm', qcolor: '#2d140f', acolor: '#8f3b25', qtop: '-12mm',
+    q: 'Älä pilaa sitä, mitä sinulla on, himoitsemalla sitä, mitä sinulla ei ole.', a: 'Epikuros' },
+  { y: 2027, m: 11, name: 'Marraskuu', art: 'galaxy', accent: '#4a5fc4', rule: '#0b0b1a',
+    font: "'Cormorant Garamond', serif", fw: 600, italic: true, qsize: '24pt', qpad: '34mm', qcolor: '#f3f1ff', acolor: '#9ecbff',
+    q: 'Olemme kaikki katuojassa, mutta jotkut meistä katselevat tähtiä.', a: 'Oscar Wilde' },
+  { y: 2027, m: 12, name: 'Joulukuu', art: 'snowflakes', accent: '#9b1b30', rule: '#2a0710',
+    font: "'Marcellus', serif", fw: 400, italic: false, qsize: '17pt', qpad: '36mm', qcolor: '#fff5ea', acolor: '#e6c27a',
+    q: 'Kaikki on hyvin epävarmaa, ja juuri se rauhoittaa minua.', a: 'Tove Jansson' },
+];
+
+// ---------- noise & helpers ----------
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function makeNoise(seed){
+  const r = mulberry32(seed), p = new Uint8Array(512), perm = [];
+  for (let i=0;i<256;i++) perm[i]=i;
+  for (let i=255;i>0;i--){const j=Math.floor(r()*(i+1));[perm[i],perm[j]]=[perm[j],perm[i]];}
+  for (let i=0;i<512;i++) p[i]=perm[i&255];
+  const G=[[1,1],[-1,1],[1,-1],[-1,-1],[1,0],[-1,0],[0,1],[0,-1]];
+  const fade=t=>t*t*t*(t*(t*6-15)+10);
+  return function(x,y){
+    const X=Math.floor(x)&255, Y=Math.floor(y)&255; x-=Math.floor(x); y-=Math.floor(y);
+    const u=fade(x), v=fade(y);
+    const g=(h,dx,dy)=>{const q=G[h&7];return q[0]*dx+q[1]*dy;};
+    const a=p[X]+Y, b=p[X+1]+Y;
+    const n00=g(p[a],x,y), n10=g(p[b],x-1,y), n01=g(p[a+1],x,y-1), n11=g(p[b+1],x-1,y-1);
+    return (n00+(n10-n00)*u) + ((n01+(n11-n01)*u) - (n00+(n10-n00)*u))*v;
+  };
+}
+function fbm(n,x,y,o=5){let s=0,a=.5,f=1;for(let i=0;i<o;i++){s+=a*n(x*f,y*f);f*=2.03;a*=.5;}return s;}
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+function ramp(stops,t){
+  t=clamp(t);
+  for(let i=1;i<stops.length;i++){ if(t<=stops[i][0]){
+    const [t0,c0]=stops[i-1],[t1,c1]=stops[i], k=(t-t0)/(t1-t0||1);
+    return [c0[0]+(c1[0]-c0[0])*k,c0[1]+(c1[1]-c0[1])*k,c0[2]+(c1[2]-c0[2])*k]; } }
+  return stops[stops.length-1][1];
+}
+function pixelField(ctx,W,H,scale,fn,blur=0){
+  const w=Math.ceil(W/scale), h=Math.ceil(H/scale);
+  const c=document.createElement('canvas'); c.width=w; c.height=h;
+  const cx=c.getContext('2d'), img=cx.createImageData(w,h), d=img.data;
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++){
+    const col=fn(x/w,y/h,w/h), i=(y*w+x)*4;
+    d[i]=col[0]; d[i+1]=col[1]; d[i+2]=col[2]; d[i+3]=255;
+  }
+  cx.putImageData(img,0,0);
+  ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+  if(blur) ctx.filter=`blur(${blur}px)`;
+  ctx.drawImage(c,-blur*2,-blur*2,W+blur*4,H+blur*4); ctx.filter='none';
+}
+function grain(ctx,W,H,amt,rng){
+  const img=ctx.getImageData(0,0,W,H), d=img.data;
+  for(let i=0;i<d.length;i+=4){const g=(rng()-.5)*amt; d[i]+=g; d[i+1]+=g; d[i+2]+=g;}
+  ctx.putImageData(img,0,0);
+}
+function stars(ctx,W,H,rng,count,opts={}){
+  const yMax=opts.yMax||H;
+  for(let i=0;i<count;i++){
+    const x=rng()*W, y=rng()*yMax, m=Math.pow(rng(),6);
+    const r=0.7+m*3.2, a=0.35+0.65*rng();
+    const tint=rng(); const col = tint<.15?'255,214,170':tint<.3?'190,215,255':'255,255,255';
+    if(m>0.45){
+      const g=ctx.createRadialGradient(x,y,0,x,y,r*7);
+      g.addColorStop(0,`rgba(${col},${a*.55})`); g.addColorStop(1,`rgba(${col},0)`);
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r*7,0,7); ctx.fill();
+    }
+    if(m>0.82){
+      ctx.strokeStyle=`rgba(${col},${a*.6})`; ctx.lineWidth=1;
+      const L=r*14; ctx.beginPath(); ctx.moveTo(x-L,y); ctx.lineTo(x+L,y); ctx.moveTo(x,y-L); ctx.lineTo(x,y+L); ctx.stroke();
+    }
+    ctx.fillStyle=`rgba(${col},${a})`; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill();
+  }
+}
+function vignette(ctx,W,H,cx,cy,rx,col,alpha){
+  ctx.save(); ctx.translate(cx,cy); ctx.scale(1,0.45);
+  const g=ctx.createRadialGradient(0,0,0,0,0,rx);
+  g.addColorStop(0,`rgba(${col},${alpha})`); g.addColorStop(1,`rgba(${col},0)`);
+  ctx.fillStyle=g; ctx.fillRect(-rx,-rx,rx*2,rx*2); ctx.restore();
+}
+
+// ---------- art styles ----------
+const ART = {
+  nebula(ctx,W,H,rng,n){
+    const n2=makeNoise(77);
+    const pal=[[0,hex('#07040d')],[.25,hex('#2a0b3d')],[.45,hex('#7a1760')],[.62,hex('#d63d5c')],[.78,hex('#ff8a2a')],[.92,hex('#ffd89a')],[1,hex('#fff6e6')]];
+    const blue=hex('#1b3a8a');
+    pixelField(ctx,W,H,2,(u,v,asp)=>{
+      const px=u*asp*1.6, py=v*1.6;
+      const qx=fbm(n,px,py), qy=fbm(n,px+5.2,py+1.3);
+      const rx=fbm(n,px+2*qx+1.7,py+2*qy+9.2), ry=fbm(n,px+2*qx+8.3,py+2*qy+2.8);
+      let f=fbm(n,px+1.8*rx,py+1.8*ry,6);
+      const band=Math.exp(-Math.pow(v-(0.95-0.75*u)+0.12*Math.sin(u*5),2)/0.09);
+      let d=clamp((f*1.7+0.55)*(0.25+0.95*band));
+      d=Math.pow(d,1.35);
+      let c=ramp(pal,d);
+      const b=clamp(fbm(n2,px*1.3,py*1.3)*2+0.3)*0.55*(1-d);
+      c=[c[0]*(1-b)+blue[0]*b*0.8,c[1]*(1-b)+blue[1]*b*0.8,c[2]*(1-b)+blue[2]*b];
+      return c;
+    },5);
+    ctx.globalCompositeOperation='lighter';
+    stars(ctx,W,H,rng,1100);
+    ctx.globalCompositeOperation='source-over';
+    vignette(ctx,W,H,W/2,H/2,W*0.46,'8,3,16',0.8); vignette(ctx,W,H,W/2,H/2,W*0.34,'8,3,16',0.55);
+  },
+
+  ink(ctx,W,H,rng,n){
+    ctx.fillStyle='#f3ece0'; ctx.fillRect(0,0,W,H);
+    pixelField(ctx,W,H,3,(u,v,asp)=>{ const f=fbm(n,u*asp*6,v*6,4); const k=f*18; return [243+k,236+k,224+k*1.2]; });
+    function splash(cx,cy,R,color,alpha,seed){
+      const r=mulberry32(seed), nn=makeNoise(seed);
+      const L=document.createElement('canvas'); L.width=W; L.height=H; const c=L.getContext('2d');
+      c.fillStyle=color;
+      c.beginPath();
+      for(let i=0;i<=360;i++){
+        const a=i/360*Math.PI*2;
+        const rr=R*(0.8+0.35*nn(Math.cos(a)*1.4+3,Math.sin(a)*1.4+3)+0.1*nn(Math.cos(a)*5,Math.sin(a)*5));
+        i?c.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr):c.moveTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);
+      }
+      c.fill();
+      // tapered tendrils with droplet heads
+      const T=12+Math.floor(r()*8);
+      for(let i=0;i<T;i++){
+        const a=r()*Math.PI*2, len=R*(0.25+r()*r()*0.9), w=R*(0.025+r()*0.045);
+        const bend=(r()-.5)*0.35;
+        const sx=cx+Math.cos(a)*R*0.6, sy=cy+Math.sin(a)*R*0.6;
+        const ea=a+bend*0.5, ex=cx+Math.cos(ea)*(R*0.85+len), ey=cy+Math.sin(ea)*(R*0.85+len);
+        const mx=(sx+ex)/2+Math.cos(a+Math.PI/2)*len*bend, my=(sy+ey)/2+Math.sin(a+Math.PI/2)*len*bend;
+        const nx=-Math.sin(a), ny=Math.cos(a);
+        c.beginPath(); c.moveTo(sx+nx*w*2,sy+ny*w*2);
+        c.quadraticCurveTo(mx+nx*w*0.4,my+ny*w*0.4,ex,ey);
+        c.quadraticCurveTo(mx-nx*w*0.4,my-ny*w*0.4,sx-nx*w*2,sy-ny*w*2); c.fill();
+        c.beginPath(); c.arc(ex,ey,w*(0.9+r()*0.9),0,7); c.fill();
+      }
+      // spatter
+      for(let i=0;i<220;i++){
+        const a=r()*Math.PI*2, dist=R*(0.95+(-Math.log(1-r()*0.99))*0.55);
+        const dr=Math.max(1.3,R*0.06*Math.exp(-(dist-R)/(R*0.35))*(0.3+r()));
+        c.beginPath(); c.ellipse(cx+Math.cos(a)*dist,cy+Math.sin(a)*dist,dr*(1+r()*0.5),dr,a,0,7); c.fill();
+      }
+      // drips from the lower edge
+      for(let i=0;i<5;i++){
+        const x=cx+(r()-.5)*R*1.1, w=R*(0.025+r()*0.035), top=cy+R*0.5, len=R*(0.35+r()*0.9);
+        c.beginPath(); c.moveTo(x-w/2-w,top); c.quadraticCurveTo(x-w/2,top+w*2,x-w/2,top+w*3);
+        c.lineTo(x-w/2,top+len); c.arc(x,top+len,w*0.75,Math.PI,0,true); c.lineTo(x+w/2,top+w*3);
+        c.quadraticCurveTo(x+w/2,top+w*2,x+w/2+w,top); c.fill();
+      }
+      ctx.save(); ctx.globalCompositeOperation='multiply'; ctx.globalAlpha=alpha; ctx.drawImage(L,0,0); ctx.restore();
+    }
+    splash(W*0.93,H*0.14,H*0.27,'#161414',0.95,11);
+    splash(W*0.06,H*0.9,H*0.24,'#b0302a',0.92,23);
+    splash(W*0.7,H*1.0,H*0.11,'#c99634',0.9,5);
+    splash(W*0.22,H*0.02,H*0.07,'#161414',0.85,41);
+    ctx.globalCompositeOperation='source-over';
+    vignette(ctx,W,H,W/2,H/2,W*0.42,'243,236,224',0.9); vignette(ctx,W,H,W/2,H/2,W*0.32,'243,236,224',0.6);
+    grain(ctx,W,H,10,rng);
+  },
+
+  flow(ctx,W,H,rng,n){
+    const g=ctx.createLinearGradient(0,0,W,H); g.addColorStop(0,'#0c171c'); g.addColorStop(1,'#12272c');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    const pal=[[0,hex('#1f7a74')],[.5,hex('#6fb3a2')],[.8,hex('#e0b75e')],[1,hex('#f4d792')]];
+    ctx.globalCompositeOperation='lighter'; ctx.lineCap='round';
+    const s=0.0011;
+    for(let i=0;i<4200;i++){
+      let x=rng()*W*1.1-W*0.05, y=rng()*H*1.1-H*0.05;
+      const t=clamp(0.5+fbm(n,x*s*0.6+10,y*s*0.6,3)*1.6);
+      const c=ramp(pal,t);
+      ctx.strokeStyle=`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${0.10+rng()*0.16})`;
+      ctx.lineWidth=0.8+rng()*1.8;
+      ctx.beginPath(); ctx.moveTo(x,y);
+      const steps=60+rng()*90;
+      for(let k=0;k<steps;k++){
+        const a=fbm(n,x*s,y*s,3)*Math.PI*3.2 + 0.25;
+        x+=Math.cos(a)*6; y+=Math.sin(a)*6; ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+    ctx.globalCompositeOperation='source-over';
+    vignette(ctx,W,H,W/2,H/2,W*0.46,'8,16,20',0.85); vignette(ctx,W,H,W/2,H/2,W*0.34,'8,16,20',0.55);
+    grain(ctx,W,H,8,rng);
+  },
+
+  aurora(ctx,W,H,rng,n){
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#020611'); g.addColorStop(.55,'#071a33'); g.addColorStop(1,'#0e3246');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    stars(ctx,W,H,rng,900,{yMax:H*0.8});
+    ctx.globalCompositeOperation='lighter';
+    const layers=[{o:0,base:.62,amp:.18,h:.55,c:[60,255,170],top:[150,80,255],a:.055},
+                  {o:40,base:.5,amp:.22,h:.45,c:[80,255,190],top:[255,90,190],a:.045},
+                  {o:90,base:.72,amp:.12,h:.35,c:[120,255,160],top:[90,120,255],a:.04}];
+    for(const L of layers){
+      for(let x=0;x<W;x+=2){
+        const u=x/W;
+        const by=H*(L.base+L.amp*n(u*2.2+L.o,L.o)*1.8 - 0.1*Math.sin(u*3+L.o));
+        const inten=clamp(0.35+fbm(n,u*5+L.o,1.3+L.o,3)*1.8)*(0.55+0.45*clamp(0.5+n(u*60+L.o,4)*1.5));
+        const hh=H*L.h*(0.7+0.5*clamp(0.5+n(u*8+L.o,9)));
+        const gr=ctx.createLinearGradient(0,by-hh,0,by+H*0.03);
+        const a=Math.min(0.9,L.a*inten*20);
+        gr.addColorStop(0,`rgba(${L.top},0)`);
+        gr.addColorStop(.45,`rgba(${L.top},${a*0.35})`);
+        gr.addColorStop(.85,`rgba(${L.c},${a})`);
+        gr.addColorStop(.93,`rgba(220,255,235,${a*1.1})`);
+        gr.addColorStop(1,`rgba(${L.c},0)`);
+        ctx.fillStyle=gr; ctx.fillRect(x,by-hh,2.2,hh+H*0.03);
+      }
+    }
+    ctx.globalCompositeOperation='source-over';
+    // snowy ground glow
+    const gg=ctx.createLinearGradient(0,H*0.82,0,H); gg.addColorStop(0,'rgba(120,200,220,0)'); gg.addColorStop(1,'rgba(160,210,230,0.25)');
+    ctx.fillStyle=gg; ctx.fillRect(0,H*0.82,W,H*0.18);
+    // spruce forest
+    function spruce(x,base,h,col){
+      const w=h*0.28; ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(x,base-h);
+      const tiers=9;
+      for(let i=1;i<=tiers;i++){const yy=base-h+h*i/tiers*0.95, ww=w*i/tiers*(0.9+rng()*0.25); ctx.lineTo(x+ww,yy); ctx.lineTo(x+ww*0.45,yy-h*0.02);}
+      ctx.lineTo(x+w*0.1,base); ctx.lineTo(x-w*0.1,base);
+      for(let i=tiers;i>=1;i--){const yy=base-h+h*i/tiers*0.95, ww=w*i/tiers*(0.9+rng()*0.25); ctx.lineTo(x-ww*0.45,yy-h*0.02); ctx.lineTo(x-ww,yy);}
+      ctx.closePath(); ctx.fill();
+    }
+    for(let x=-20;x<W+20;x+=W/140){ const h=H*(0.10+rng()*0.10); spruce(x+rng()*10,H*0.97+rng()*4,h,'#0a1c2c'); }
+    ctx.fillStyle='#0a1c2c'; ctx.fillRect(0,H*0.965,W,H);
+    for(let x=-20;x<W+20;x+=W/70){ const edge=Math.abs(x/W-0.5)*2; const h=H*(0.12+rng()*0.10+edge*edge*0.14); spruce(x+rng()*18,H*1.01,h,'#030a12'); }
+    // gentle snowfall
+    for(let i=0;i<500;i++){ctx.fillStyle=`rgba(255,255,255,${0.15+rng()*0.4})`; ctx.beginPath(); ctx.arc(rng()*W,rng()*H,0.8+rng()*2.2,0,7); ctx.fill();}
+    vignette(ctx,W,H,W/2,H*0.4,W*0.46,'2,8,24',0.75); vignette(ctx,W,H,W/2,H*0.4,W*0.34,'2,8,24',0.45);
+  },
+
+  deco(ctx,W,H,rng,n){
+    const g=ctx.createRadialGradient(W/2,H*0.55,0,W/2,H*0.55,W*0.6);
+    g.addColorStop(0,'#172a45'); g.addColorStop(1,'#08111f');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    const gold=ctx.createLinearGradient(0,0,W,H);
+    gold.addColorStop(0,'#8a6a2a'); gold.addColorStop(.3,'#e9c979'); gold.addColorStop(.5,'#b38b3e'); gold.addColorStop(.75,'#f3dc9a'); gold.addColorStop(1,'#8f6c2c');
+    // fan (scallop) pattern
+    ctx.strokeStyle=gold; ctx.globalAlpha=0.22; ctx.lineWidth=2;
+    const R=H/7;
+    for(let row=-1;row<12;row++){
+      for(let col=-1;col<W/R+2;col++){
+        const cx=col*R*2+(row%2?R:0), cy=row*R*0.5*1.0+R;
+        ctx.save(); ctx.beginPath(); ctx.rect(cx-R,cy-R,R*2,R); ctx.clip();
+        for(let k=5;k>=1;k--){ ctx.beginPath(); ctx.arc(cx,cy,R*k/5,Math.PI,0); ctx.fillStyle='#0b1628'; if(k===5){ctx.globalAlpha=1; ctx.fill(); ctx.globalAlpha=0.22;} ctx.stroke(); }
+        ctx.restore();
+      }
+    }
+    ctx.globalAlpha=1;
+    // sunburst
+    const sx=W/2, sy=H*1.08;
+    ctx.save(); ctx.globalAlpha=0.85;
+    for(let i=0;i<=44;i++){
+      const a=Math.PI+i/44*Math.PI;
+      ctx.beginPath(); ctx.moveTo(sx+Math.cos(a)*H*0.25,sy+Math.sin(a)*H*0.25);
+      ctx.lineTo(sx+Math.cos(a)*W,sy+Math.sin(a)*W);
+      ctx.lineWidth=i%2?1.5:4; ctx.globalAlpha=i%2?0.35:0.7; ctx.strokeStyle=gold; ctx.stroke();
+    }
+    ctx.restore();
+    // cartouche
+    const cw=W*0.72, ch=H*0.56, cx0=(W-cw)/2, cy0=H*0.2;
+    const step=H*0.035;
+    function stepped(inset){
+      const x0=cx0+inset, y0=cy0+inset, x1=cx0+cw-inset, y1=cy0+ch-inset, s=step;
+      ctx.beginPath();
+      ctx.moveTo(x0+2*s,y0); ctx.lineTo(x1-2*s,y0); ctx.lineTo(x1-2*s,y0+s); ctx.lineTo(x1-s,y0+s); ctx.lineTo(x1-s,y0+2*s); ctx.lineTo(x1,y0+2*s);
+      ctx.lineTo(x1,y1-2*s); ctx.lineTo(x1-s,y1-2*s); ctx.lineTo(x1-s,y1-s); ctx.lineTo(x1-2*s,y1-s); ctx.lineTo(x1-2*s,y1);
+      ctx.lineTo(x0+2*s,y1); ctx.lineTo(x0+2*s,y1-s); ctx.lineTo(x0+s,y1-s); ctx.lineTo(x0+s,y1-2*s); ctx.lineTo(x0,y1-2*s);
+      ctx.lineTo(x0,y0+2*s); ctx.lineTo(x0+s,y0+2*s); ctx.lineTo(x0+s,y0+s); ctx.lineTo(x0+2*s,y0+s); ctx.closePath();
+    }
+    stepped(0); ctx.fillStyle='rgba(8,17,31,0.94)'; ctx.fill(); ctx.strokeStyle=gold; ctx.lineWidth=5; ctx.stroke();
+    stepped(step*0.45); ctx.lineWidth=1.6; ctx.stroke();
+    // outer frame
+    ctx.lineWidth=3; ctx.strokeRect(H*0.05,H*0.06,W-H*0.1,H-H*0.12);
+    ctx.lineWidth=1.2; ctx.strokeRect(H*0.07,H*0.08,W-H*0.14,H-H*0.16);
+    // diamonds
+    ctx.fillStyle=gold;
+    for(const [x,y] of [[W/2,cy0],[W/2,cy0+ch]]){ctx.beginPath(); ctx.moveTo(x,y-step*0.8); ctx.lineTo(x+step*0.8,y); ctx.lineTo(x,y+step*0.8); ctx.lineTo(x-step*0.8,y); ctx.closePath(); ctx.fill();}
+    grain(ctx,W,H,6,rng);
+  },
+
+  bauhaus(ctx,W,H,rng,n){
+    ctx.fillStyle='#efe8dc'; ctx.fillRect(0,0,W,H);
+    const pal=['#e4572e','#2e5eaa','#f2b134','#1b1b1e','#3f7d5a','#e8a598'];
+    const S=H/4, cols=Math.ceil(W/S);
+    const pick=()=>pal[Math.floor(rng()*pal.length)];
+    for(let r=0;r<4;r++) for(let c=0;c<cols;c++){
+      const x=c*S, y=r*S, k=Math.floor(rng()*7);
+      ctx.fillStyle=pick(); if(rng()<0.35){ctx.fillRect(x,y,S,S); ctx.fillStyle=pick();}
+      ctx.beginPath();
+      if(k===0){const q=Math.floor(rng()*4), cx=x+(q&1)*S, cy=y+(q>>1)*S; ctx.moveTo(cx,cy); ctx.arc(cx,cy,S,0,7); ctx.save(); ctx.clip(); ctx.fillRect(x,y,S,S); ctx.restore(); }
+      else if(k===1){const a=Math.floor(rng()*4)*Math.PI/2; ctx.arc(x+S/2,y+S/2,S/2,a,a+Math.PI); ctx.fill();}
+      else if(k===2){ctx.arc(x+S/2,y+S/2,S*0.38,0,7); ctx.fill();}
+      else if(k===3){for(let i=0;i<5;i++) ctx.fillRect(x+i*S/5,y,S/10,S);}
+      else if(k===4){const f=rng()<.5; ctx.moveTo(x,y+S); ctx.lineTo(f?x:x+S,y); ctx.lineTo(x+S,y+S); ctx.fill();}
+      else if(k===5){ctx.arc(x+S/2,y+S/2,S*0.4,0,7); ctx.lineWidth=S*0.1; ctx.strokeStyle=ctx.fillStyle; ctx.stroke();}
+    }
+    ctx.strokeStyle='rgba(27,27,30,0.9)'; ctx.lineWidth=3;
+    for(let c=0;c<=cols;c++){ctx.beginPath(); ctx.moveTo(c*S,0); ctx.lineTo(c*S,H); ctx.stroke();}
+    for(let r=1;r<4;r++){ctx.beginPath(); ctx.moveTo(0,r*S); ctx.lineTo(W,r*S); ctx.stroke();}
+    const pw=W*0.66, ph=H*0.52;
+    ctx.fillStyle='#efe8dc'; ctx.fillRect((W-pw)/2,(H-ph)/2,pw,ph);
+    ctx.lineWidth=8; ctx.strokeStyle='#1b1b1e'; ctx.strokeRect((W-pw)/2,(H-ph)/2,pw,ph);
+    ctx.fillStyle='#e4572e'; ctx.fillRect((W-pw)/2-8,(H-ph)/2-8,H*0.05,H*0.05);
+    ctx.fillStyle='#2e5eaa'; ctx.beginPath(); ctx.arc((W+pw)/2,(H+ph)/2,H*0.035,0,7); ctx.fill();
+    grain(ctx,W,H,8,rng);
+  },
+
+  watercolor(ctx,W,H,rng,n){
+    ctx.fillStyle='#fbfaf5'; ctx.fillRect(0,0,W,H);
+    const pal=['143,191,143','244,169,168','185,167,217','246,215,122','142,202,230','108,160,120'];
+    const gauss=()=>{let s=0;for(let i=0;i<4;i++)s+=rng();return (s-2)/1.15;};
+    function deform(pts,depth,v){
+      for(let d=0;d<depth;d++){
+        const out=[];
+        for(let i=0;i<pts.length;i++){
+          const a=pts[i], b=pts[(i+1)%pts.length], len=Math.hypot(b[0]-a[0],b[1]-a[1]);
+          out.push(a); out.push([(a[0]+b[0])/2+gauss()*len*v,(a[1]+b[1])/2+gauss()*len*v]);
+        }
+        pts=out;
+      }
+      return pts;
+    }
+    for(let b=0;b<34;b++){
+      let x,y,tries=0;
+      do{ x=rng()*W; y=rng()*H; tries++; } while(tries<50 && Math.pow((x-W/2)/(W*0.34),2)+Math.pow((y-H/2)/(H*0.4),2)<1);
+      const R=H*(0.12+rng()*0.22), col=pal[Math.floor(rng()*pal.length)];
+      let base=[]; for(let i=0;i<10;i++){const a=i/10*Math.PI*2; base.push([x+Math.cos(a)*R,y+Math.sin(a)*R]);}
+      base=deform(base,2,0.35);
+      for(let l=0;l<28;l++){
+        const p=deform(base,3,0.28);
+        ctx.fillStyle=`rgba(${col},0.045)`; ctx.beginPath(); p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])); ctx.fill();
+      }
+    }
+    for(let i=0;i<120;i++){ const col=pal[Math.floor(rng()*pal.length)]; ctx.fillStyle=`rgba(${col},${0.25+rng()*0.4})`;
+      const x=rng()*W, y=rng()*H; if(Math.pow((x-W/2)/(W*0.36),2)+Math.pow((y-H/2)/(H*0.42),2)<1) continue;
+      ctx.beginPath(); ctx.arc(x,y,2+rng()*9,0,7); ctx.fill(); }
+    vignette(ctx,W,H,W/2,H/2,W*0.4,'251,250,245',0.9);
+    grain(ctx,W,H,7,rng);
+  },
+
+  retro(ctx,W,H,rng,n){
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#ffe3b3'); g.addColorStop(.55,'#ffb38a'); g.addColorStop(1,'#f07a7a');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    const cx=W/2, cy=H*1.02, R=H*0.62;
+    const sg=ctx.createLinearGradient(0,cy-R,0,cy); sg.addColorStop(0,'#fff6dc'); sg.addColorStop(1,'#ffd08a');
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,7); ctx.clip();
+    ctx.fillStyle=sg; ctx.fillRect(cx-R,cy-R,R*2,R*2);
+    ctx.fillStyle='#f07a7a';
+    for(let i=0;i<7;i++){ const y=cy-R*0.62+i*R*0.1, h=R*0.012*(i+1); ctx.globalAlpha=0.9; ctx.fillRect(cx-R,y,R*2,h); }
+    ctx.restore(); ctx.globalAlpha=1;
+    // halftone dots, bigger toward the sides
+    const step=26;
+    for(let y=step/2;y<H;y+=step) for(let x=step/2;x<W;x+=step){
+      const ex=Math.abs(x-W/2)/(W/2), ey=y/H;
+      const s=clamp((ex-0.42)*1.9+ey*0.25+fbm(n,x*0.002,y*0.002,2)*0.5);
+      if(s<=0.02) continue;
+      ctx.fillStyle=ex>0.7?'#8a2c5b':'#d9544d'; ctx.globalAlpha=0.85;
+      ctx.beginPath(); ctx.arc(x+(Math.floor(y/step)%2?step/2:0),y,s*step*0.55,0,7); ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    // a few retro stripes on the sides
+    const cols=['#2b193d','#8a2c5b','#d9544d','#f2a541'];
+    cols.forEach((c,i)=>{ ctx.strokeStyle=c; ctx.lineWidth=H*0.025; ctx.beginPath();
+      ctx.arc(-H*0.1,H*1.1,H*(0.45+i*0.06),-Math.PI/2,0); ctx.stroke();
+      ctx.beginPath(); ctx.arc(W+H*0.1,H*1.1,H*(0.45+i*0.06),Math.PI,Math.PI*1.5); ctx.stroke(); });
+    vignette(ctx,W,H,W/2,H*0.4,W*0.42,'255,236,205',0.75);
+    grain(ctx,W,H,8,rng);
+  },
+
+  midsummer(ctx,W,H,rng,n){
+    const hz=H*0.64;
+    const g=ctx.createLinearGradient(0,0,0,hz);
+    g.addColorStop(0,'#1b2a4a'); g.addColorStop(.45,'#5b4a7a'); g.addColorStop(.75,'#e98f8f'); g.addColorStop(1,'#ffcf8a');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,hz);
+    // sun resting on the horizon
+    const sx=W*0.5, sr=H*0.09;
+    const glow=ctx.createRadialGradient(sx,hz,0,sx,hz,H*0.7); glow.addColorStop(0,'rgba(255,230,170,0.85)'); glow.addColorStop(1,'rgba(255,200,140,0)');
+    ctx.fillStyle=glow; ctx.fillRect(0,0,W,hz);
+    ctx.fillStyle='#fff1cf'; ctx.beginPath(); ctx.arc(sx,hz,sr,Math.PI,0); ctx.fill();
+    // thin clouds
+    ctx.globalCompositeOperation='screen';
+    for(let i=0;i<9;i++){ const y=H*(0.18+rng()*0.35), x=rng()*W, w=W*(0.15+rng()*0.25);
+      ctx.fillStyle=`rgba(255,190,190,${0.08+rng()*0.1})`; ctx.beginPath(); ctx.ellipse(x,y,w,H*0.012,0,0,7); ctx.fill(); }
+    ctx.globalCompositeOperation='source-over';
+    // lake (mirrored sky)
+    const lg=ctx.createLinearGradient(0,hz,0,H);
+    lg.addColorStop(0,'#e7a07a'); lg.addColorStop(.35,'#6d557f'); lg.addColorStop(1,'#16223c');
+    ctx.fillStyle=lg; ctx.fillRect(0,hz,W,H-hz);
+    for(let i=0;i<260;i++){ const y=hz+Math.pow(rng(),1.6)*(H-hz), w=(20+rng()*160)*(1+(y-hz)/(H-hz)*2);
+      const nearSun=Math.abs(rng()-0.5)<0.12; const x=nearSun? sx+(rng()-.5)*sr*3 : rng()*W;
+      ctx.fillStyle=nearSun?`rgba(255,235,190,${0.5+rng()*0.4})`:`rgba(255,210,190,${0.08+rng()*0.15})`;
+      ctx.fillRect(x-w/2,y,w,1.5+rng()*2.5); }
+    // shoreline forest silhouettes with mirrored reflection
+    function tree(x,base,h,dir,col){
+      const w=h*0.26; ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(x,base-dir*h);
+      for(let i=1;i<=8;i++){const yy=base-dir*h+dir*h*i/8*0.95, ww=w*i/8; ctx.lineTo(x+ww,yy); ctx.lineTo(x+ww*0.45,yy-dir*h*0.02);}
+      ctx.lineTo(x+w*0.1,base); ctx.lineTo(x-w*0.1,base);
+      for(let i=8;i>=1;i--){const yy=base-dir*h+dir*h*i/8*0.95, ww=w*i/8; ctx.lineTo(x-ww*0.45,yy-dir*h*0.02); ctx.lineTo(x-ww,yy);}
+      ctx.closePath(); ctx.fill();
+    }
+    for(let x=-20;x<W+20;x+=W/180){
+      const e=Math.abs(x/W-0.5)*2; if(e<0.18 && rng()<0.85) continue;
+      const h=H*(0.03+e*e*0.14+rng()*0.04);
+      tree(x,hz+1,h,1,'#1a1830'); ctx.globalAlpha=0.45; tree(x,hz-1,h*0.9,-1,'#1a1830'); ctx.globalAlpha=1;
+    }
+    ctx.fillStyle='#1a1830'; ctx.fillRect(0,hz-1,W,3);
+    vignette(ctx,W,H,W/2,H*0.36,W*0.44,'22,28,58',0.7);
+    grain(ctx,W,H,6,rng);
+  },
+
+  waves(ctx,W,H,rng,n){
+    ctx.fillStyle='#f4ecd8'; ctx.fillRect(0,0,W,H);
+    // red sun
+    ctx.fillStyle='#d8573f'; ctx.beginPath(); ctx.arc(W*0.915,H*0.22,H*0.12,0,7); ctx.fill();
+    // cloud bands
+    ctx.strokeStyle='rgba(29,53,87,0.35)'; ctx.lineWidth=3;
+    for(const [x,y,w] of [[W*0.12,H*0.2,W*0.12],[W*0.7,H*0.12,W*0.08],[W*0.2,H*0.32,W*0.06]]){
+      for(let i=0;i<3;i++){ctx.beginPath(); ctx.moveTo(x-w/2+i*20,y+i*14); ctx.lineTo(x+w/2-i*30,y+i*14); ctx.stroke();}
+    }
+    const cols=['#a8dadc','#6fa8c7','#457b9d','#2f5d8a','#1d3557','#16294a'];
+    const layers=11;
+    for(let l=0;l<layers;l++){
+      const base=H*(0.66+l*0.035), amp=H*(0.03+0.012*l), freq=0.0045-l*0.00015, ph=rng()*10;
+      const col=cols[Math.min(cols.length-1,Math.floor(l/layers*cols.length))];
+      const pts=[];
+      for(let x=-10;x<=W+10;x+=6){
+        const u=x*freq+ph; const sh=Math.sin(u)+0.35*Math.sin(u*2.1+1)+0.4*n(x*0.003,l*3.1);
+        const y=base-amp*Math.pow(Math.max(0,sh+0.4),1.6);
+        pts.push([x,y]);
+      }
+      ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(-10,H+10); pts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.lineTo(W+10,H+10); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle='#f4ecd8'; ctx.lineWidth=4; ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])); ctx.stroke();
+      // inner lines
+      ctx.strokeStyle='rgba(244,236,216,0.35)'; ctx.lineWidth=2;
+      for(let k=1;k<3;k++){ ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]+k*H*0.012):ctx.moveTo(p[0],p[1]+k*H*0.012)); ctx.stroke(); }
+      // foam on crests
+      ctx.fillStyle='#fbf7ec';
+      for(let i=1;i<pts.length-1;i+=1){ const p=pts[i]; if(p[1]<pts[i-1][1]&&p[1]<=pts[i+1][1]&&p[1]<base-amp*0.8){
+        for(let k=0;k<14;k++){ ctx.beginPath(); ctx.arc(p[0]+(rng()-.5)*60,p[1]-rng()*25,2+rng()*6,0,7); ctx.fill(); } } }
+    }
+    vignette(ctx,W,H,W/2,H*0.4,W*0.4,'244,236,216',0.6);
+    grain(ctx,W,H,8,rng);
+  },
+
+  topo(ctx,W,H,rng,n){
+    const f=(x,y)=>fbm(n,x*0.0011+3,y*0.0011+7,5)+0.25*Math.sin(x*0.0015);
+    const levels=26, lo=-0.55, hi=0.75;
+    const pal=[[0,hex('#efe6d2')],[.35,hex('#e2d6b8')],[.6,hex('#cfc39a')],[.8,hex('#d9b48f')],[1,hex('#c98f6b')]];
+    pixelField(ctx,W,H,4,(u,v,asp)=>{ const val=f(u*W,v*H); const t=Math.floor(clamp((val-lo)/(hi-lo))*levels)/levels; return ramp(pal,t); });
+    const g=8, gw=Math.ceil(W/g)+1, gh=Math.ceil(H/g)+1, F=new Float32Array(gw*gh);
+    for(let j=0;j<gh;j++) for(let i=0;i<gw;i++) F[j*gw+i]=f(i*g,j*g);
+    for(let L=1;L<levels;L++){
+      const iso=lo+(hi-lo)*L/levels; ctx.beginPath();
+      for(let j=0;j<gh-1;j++) for(let i=0;i<gw-1;i++){
+        const a=F[j*gw+i], b=F[j*gw+i+1], c=F[(j+1)*gw+i+1], d=F[(j+1)*gw+i];
+        const idx=(a>iso?8:0)|(b>iso?4:0)|(c>iso?2:0)|(d>iso?1:0);
+        if(idx===0||idx===15) continue;
+        const x=i*g, y=j*g, lerp=(p,q)=>(iso-p)/(q-p);
+        const T=[x+g*lerp(a,b),y], R=[x+g,y+g*lerp(b,c)], B=[x+g*lerp(d,c),y+g], Lf=[x,y+g*lerp(a,d)];
+        const segs={1:[[Lf,B]],2:[[B,R]],3:[[Lf,R]],4:[[T,R]],5:[[Lf,T],[B,R]],6:[[T,B]],7:[[Lf,T]],8:[[Lf,T]],9:[[T,B]],10:[[T,R],[Lf,B]],11:[[T,R]],12:[[Lf,R]],13:[[B,R]],14:[[Lf,B]]}[idx];
+        for(const [p,q] of segs){ctx.moveTo(p[0],p[1]); ctx.lineTo(q[0],q[1]);}
+      }
+      ctx.strokeStyle=L%5===0?'rgba(110,70,45,0.85)':'rgba(120,85,60,0.45)'; ctx.lineWidth=L%5===0?3.2:1.6; ctx.stroke();
+    }
+    vignette(ctx,W,H,W/2,H/2,W*0.44,'241,233,218',0.92); vignette(ctx,W,H,W/2,H/2,W*0.3,'241,233,218',0.6);
+    grain(ctx,W,H,7,rng);
+  },
+
+  mosaic(ctx,W,H,rng,n){
+    const cols=['#9b2226','#ae2012','#bb3e03','#ca6702','#ee9b00','#e9c46a','#94a37e','#5b6c4f','#7f5539'].map(hex);
+    const P=[]; for(let i=0;i<340;i++) P.push([rng(),rng(),cols[Math.floor(rng()*cols.length)],0.85+rng()*0.25]);
+    const asp=W/H, sc=2, w=Math.ceil(W/sc), h=Math.ceil(H/sc), grout=hex('#1b1b1b');
+    pixelField(ctx,W,H,sc,(u,v)=>{
+      let d1=1e9,d2=1e9,best=null;
+      for(const p of P){ const dx=(u-p[0])*asp, dy=v-p[1], d=dx*dx+dy*dy; if(d<d1){d2=d1;d1=d;best=p;} else if(d<d2) d2=d; }
+      const edge=(Math.sqrt(d2)-Math.sqrt(d1))*h;
+      if(edge<2.2) return grout;
+      const k=best[3]*(1+fbm(n,u*20,v*20,2)*0.25), c=best[2];
+      return [c[0]*k,c[1]*k,c[2]*k];
+    });
+    const pw=W*0.6, ph=H*0.5, r=H*0.04;
+    ctx.fillStyle='rgba(27,27,27,0.93)'; ctx.beginPath(); ctx.roundRect((W-pw)/2,(H-ph)/2,pw,ph,r); ctx.fill();
+    ctx.strokeStyle='#ee9b00'; ctx.lineWidth=4; ctx.stroke();
+    grain(ctx,W,H,7,rng);
+  },
+
+  papercut(ctx,W,H,rng,n){
+    const g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#fbe7c6'); g.addColorStop(1,'#f5c08a');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#fff6e2'; ctx.beginPath(); ctx.arc(W*0.9,H*0.2,H*0.1,0,7); ctx.fill();
+    const cols=['#f3b57a','#eb9a5e','#dc7c45','#c65f33','#a8482a','#823522','#5c261b'];
+    cols.forEach((c,l)=>{
+      const base=H*(0.5+l*0.075), amp=H*(0.09-l*0.006), ph=l*7.3;
+      ctx.save(); ctx.shadowColor='rgba(60,20,10,0.4)'; ctx.shadowBlur=30; ctx.shadowOffsetY=-8;
+      ctx.fillStyle=c; ctx.beginPath(); ctx.moveTo(0,H+20);
+      for(let x=0;x<=W;x+=8){ const edge=Math.abs(x/W-0.5)*2; const y=base-amp*(0.4+fbm(n,x*0.0012+ph,ph,4)*2)-H*0.14*edge*edge*(1-l/cols.length); ctx.lineTo(x,y); }
+      ctx.lineTo(W,H+20); ctx.closePath(); ctx.fill(); ctx.restore();
+      // tiny trees on some ridges
+      if(l>=3){ ctx.fillStyle=c; for(let i=0;i<14;i++){ const x=rng()*W; const edge=Math.abs(x/W-0.5)*2; if(edge<0.5) continue;
+        const y=base-amp*(0.4+fbm(n,x*0.0012+ph,ph,4)*2)-H*0.14*edge*edge*(1-l/cols.length)+4, th=H*(0.04+rng()*0.04);
+        ctx.beginPath(); ctx.moveTo(x,y-th); ctx.lineTo(x+th*0.28,y); ctx.lineTo(x-th*0.28,y); ctx.fill(); } }
+    });
+    vignette(ctx,W,H,W/2,H*0.4,W*0.42,'252,233,200',0.85); vignette(ctx,W,H,W/2,H*0.4,W*0.3,'252,233,200',0.5);
+    grain(ctx,W,H,8,rng);
+  },
+
+  galaxy(ctx,W,H,rng,n){
+    ctx.fillStyle='#04040c'; ctx.fillRect(0,0,W,H);
+    // faint background dust
+    pixelField(ctx,W,H,4,(u,v,asp)=>{ const f=clamp(fbm(n,u*asp*2,v*2,5)+0.2); return [4+f*40,4+f*22,12+f*60]; },3);
+    ctx.globalCompositeOperation='lighter';
+    stars(ctx,W,H,rng,800);
+    const cx=W*0.8, cy=H*0.55, Rm=H*0.95, rot=-0.35, tilt=0.42;
+    const gs=()=>{let s=0;for(let i=0;i<3;i++)s+=rng();return s/3-0.5;};
+    for(let i=0;i<70000;i++){
+      const arm=i%2, t=Math.pow(rng(),0.8), r=t*Rm;
+      const th=arm*Math.PI + t*3.6*Math.PI + gs()*(0.9-t*0.4);
+      let x=Math.cos(th)*r*(1+gs()*0.12), y=Math.sin(th)*r*(1+gs()*0.12)*tilt;
+      const X=cx+x*Math.cos(rot)-y*Math.sin(rot), Y=cy+x*Math.sin(rot)+y*Math.cos(rot);
+      const pink=rng()<0.03 && t>0.25;
+      const c=pink?'255,120,180':t<0.18?'255,225,180':'160,200,255';
+      ctx.fillStyle=`rgba(${c},${pink?0.5:0.22*(1-t*0.5)})`;
+      const s=pink?3.2:1+rng()*1.8; ctx.fillRect(X,Y,s,s);
+    }
+    const core=ctx.createRadialGradient(cx,cy,0,cx,cy,H*0.3);
+    core.addColorStop(0,'rgba(255,240,210,0.95)'); core.addColorStop(.25,'rgba(255,200,150,0.35)'); core.addColorStop(1,'rgba(120,120,255,0)');
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(rot); ctx.scale(1,0.6); ctx.translate(-cx,-cy); ctx.fillStyle=core; ctx.fillRect(cx-H*0.3,cy-H*0.3,H*0.6,H*0.6); ctx.restore();
+    ctx.globalCompositeOperation='source-over';
+    vignette(ctx,W,H,W*0.46,H/2,W*0.44,'4,4,12',0.85); vignette(ctx,W,H,W*0.46,H/2,W*0.3,'4,4,12',0.55);
+  },
+
+  snowflakes(ctx,W,H,rng,n){
+    const g=ctx.createRadialGradient(W/2,H*0.45,0,W/2,H*0.45,W*0.65);
+    g.addColorStop(0,'#6a1222'); g.addColorStop(1,'#2a0710');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    function flake(x,y,R,col,lw){
+      const r=mulberry32(Math.floor(rng()*1e9)); const br=[]; const nb=2+Math.floor(r()*3);
+      for(let i=0;i<nb;i++) br.push([0.3+r()*0.55,0.15+r()*0.3,0.8+r()*0.6]);
+      ctx.save(); ctx.translate(x,y); ctx.rotate(r()*Math.PI); ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.lineCap='round';
+      for(let k=0;k<6;k++){
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R);
+        for(const [p,l,a] of br){ const yy=-R*p, L=R*l*(1-p*0.5);
+          ctx.moveTo(0,yy); ctx.lineTo(L*Math.sin(a*0.7),yy-L*Math.cos(a*0.7)); ctx.moveTo(0,yy); ctx.lineTo(-L*Math.sin(a*0.7),yy-L*Math.cos(a*0.7)); }
+        ctx.stroke();
+        if(r()<0.5){ctx.beginPath(); ctx.moveTo(0,-R*0.12); ctx.lineTo(R*0.07,-R*0.2); ctx.lineTo(0,-R*0.28); ctx.lineTo(-R*0.07,-R*0.2); ctx.closePath(); ctx.stroke();}
+        ctx.rotate(Math.PI/3);
+      }
+      ctx.restore();
+    }
+    for(let i=0;i<700;i++){ctx.fillStyle=`rgba(255,240,230,${0.1+rng()*0.4})`; ctx.beginPath(); ctx.arc(rng()*W,rng()*H,0.8+rng()*2.6,0,7); ctx.fill();}
+    for(let i=0;i<70;i++){
+      const x=rng()*W, y=rng()*H, inC=Math.pow((x-W/2)/(W*0.36),2)+Math.pow((y-H/2)/(H*0.42),2)<1;
+      const R=inC? H*(0.02+rng()*0.03) : H*(0.04+Math.pow(rng(),2)*0.16);
+      const gold=rng()<0.3;
+      flake(x,y,R,gold?`rgba(230,194,122,${0.55+rng()*0.4})`:`rgba(255,245,235,${inC?0.25:0.45+rng()*0.45})`,Math.max(2,R*0.045));
+    }
+    vignette(ctx,W,H,W/2,H/2,W*0.44,'42,7,16',0.75); vignette(ctx,W,H,W/2,H/2,W*0.3,'42,7,16',0.45);
+    grain(ctx,W,H,6,rng);
+  },
+
+  marble(ctx,W,H,rng,n){
+    const n2=makeNoise(303);
+    const pal=[[0,hex('#faf4ec')],[.18,hex('#f3d3cf')],[.3,hex('#e79aa9')],[.38,hex('#b3486e')],[.44,hex('#faf4ec')],
+               [.56,hex('#9fd0cb')],[.66,hex('#3f8f8f')],[.74,hex('#1f3b4d')],[.8,hex('#faf4ec')],[.9,hex('#f6e4c4')],[1,hex('#faf4ec')]];
+    const gold=hex('#d4a64a');
+    pixelField(ctx,W,H,2,(u,v,asp)=>{
+      const px=u*asp*1.1, py=v*1.1;
+      const qx=fbm(n,px,py,4), qy=fbm(n,px+3.1,py+7.7,4);
+      const rx=fbm(n,px+3*qx+1.2,py+3*qy+4.4,5), ry=fbm(n,px+3*qx+6.1,py+3*qy+2.2,5);
+      const f=fbm(n2,px+2.6*rx,py+2.6*ry,5);
+      let t=(f*2.2+u*0.9+v*0.2)%1; if(t<0)t+=1;
+      let c=ramp(pal,t);
+      const vein=Math.exp(-Math.pow(((f*9+u*3)%1+1)%1-0.5,2)/0.00035);
+      c=[c[0]*(1-vein)+gold[0]*vein,c[1]*(1-vein)+gold[1]*vein,c[2]*(1-vein)+gold[2]*vein];
+      return c;
+    });
+    ctx.save(); ctx.fillStyle='rgba(250,244,236,0.9)';
+    const pw=W*0.74, ph=H*0.6, px0=(W-pw)/2, py0=(H-ph)/2, r=H*0.06;
+    ctx.beginPath(); ctx.roundRect(px0,py0,pw,ph,r); ctx.fill();
+    ctx.strokeStyle='rgba(212,166,74,0.9)'; ctx.lineWidth=3; ctx.stroke();
+    ctx.restore();
+    grain(ctx,W,H,6,rng);
+  },
+};
+
+// ---------- build pages ----------
+const pad=n=>String(n);
+function isoWeek(d){
+  const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  const day=t.getUTCDay()||7; t.setUTCDate(t.getUTCDate()+4-day);
+  const y0=new Date(Date.UTC(t.getUTCFullYear(),0,1));
+  return Math.ceil(((t-y0)/86400000+1)/7);
+}
+const PX_W=2480, PX_H=Math.round(2480*99/210);
+const root=document.getElementById('root');
+const only=new URLSearchParams(location.search).get('page');
+
+const QMAX={deco:40,bauhaus:39,mosaic:37,marble:45};
+function build(){
+MONTHS.forEach((M,idx)=>{
+  if(only!==null && +only!==idx) return;
+  const page=document.createElement('div'); page.className='page';
+  // art
+  const art=document.createElement('div'); art.className='art';
+  const cv=document.createElement('canvas'); cv.width=PX_W; cv.height=PX_H;
+  const ctx=cv.getContext('2d');
+  const sd=M.seed??idx; ART[M.art](ctx,PX_W,PX_H,mulberry32(1000+sd),makeNoise(17+sd*31));
+  const img=new Image(); img.src=cv.toDataURL('image/jpeg',0.93); art.appendChild(img);
+  const q=document.createElement('div'); q.className='quote';
+  if(M.qtop) q.style.transform=`translateY(${M.qtop})`;
+  if(M.qpad) q.style.padding=`0 ${M.qpad}`;
+  q.innerHTML=`<div class="q" data-k="q-${idx}" style="font-family:${M.font};font-weight:${M.fw};font-style:${M.italic?'italic':'normal'};font-size:${M.qsize};color:${M.qcolor};${M.upper?'text-transform:uppercase;letter-spacing:.14em;line-height:1.5;':''}">${M.italic?'\u201D'+M.q+'\u201D':M.q}</div><div class="a" data-k="a-${idx}" style="color:${M.acolor}">${M.a}</div>`;
+  art.appendChild(q); page.appendChild(art);
+
+  // grid
+  const body=document.createElement('div'); body.className='body';
+  const tf=M.titleFont||M.font;
+  body.innerHTML=`<div class="head"><div class="m" data-k="m-${idx}" style="font-family:${tf};font-weight:${M.titleFont?400:(M.fw>=500?600:500)};color:${M.rule}">${M.name}</div><div class="y" style="color:${M.accent}">${M.y}</div></div>
+    <div class="dow" style="color:${M.rule}"><div class="wk">vk</div>${['MA','TI','KE','TO','PE','LA','SU'].map((d,i)=>`<div style="${i===6?'color:#c62828':''}">${d}</div>`).join('')}</div>`;
+  const grid=document.createElement('div'); grid.className='grid'; grid.style.borderTopColor=M.rule;
+  const first=new Date(M.y,M.m-1,1);
+  const start=new Date(first); start.setDate(1-((first.getDay()+6)%7));
+  const last=new Date(M.y,M.m,0);
+  let d=new Date(start);
+  let html='';
+  while(d<=last){
+    html+=`<div class="wn">${isoWeek(d)}</div>`;
+    for(let i=0;i<7;i++){
+      const inM=d.getMonth()===M.m-1, key=`${d.getMonth()+1}-${d.getDate()}`, ekey=`${d.getFullYear()}-${key}`;
+      const ev=inM?EVENTS[ekey]:null;
+      const cls=['cell']; if(i>=5) cls.push('we'); if(!inM) cls.push('out');
+      if(inM && (i===6 || (ev&&ev.red))) cls.push('red');
+      let inner=`<div class="n">${d.getDate()}</div>`;
+      if(inM){
+        if(ev&&ev.flag) inner+=`<div class="flag">${FLAG_SVG}</div>`;
+        if(ev) inner+=`<div data-k="ev-${ekey}" class="ev${ev.minor?' minor':''}" style="${ev.minor?'':(ev.red?'color:#c62828':'color:'+M.accent)}">${ev.t}</div>`+(ev.t2?`<div data-k="t2-${ekey}" class="ev minor" style="margin-top:.5mm">${ev.t2}</div>`:'');
+        const nm=NAMEDAYS[key]||[];
+        inner+=`<div class="note" data-k="note-${ekey}" style="color:${M.accent}"></div>`;
+        inner+=`<div class="names" data-k="nm-${ekey}">${nm.join(', ')}</div>`;
+      }
+      html+=`<div class="${cls.join(' ')}">${inner}</div>`;
+      d.setDate(d.getDate()+1);
+    }
+  }
+  grid.innerHTML=html; body.appendChild(grid);
+  const foot=document.createElement('div'); foot.className='foot';
+  foot.innerHTML=`<span>${FLAG_SVG} Liputuspäivä</span><span><i class="dot"></i> Sunnuntai / pyhäpäivä</span><span>Nimipäivät: Almanakkatoimisto, Helsingin yliopisto</span>`;
+  body.appendChild(foot);
+  page.appendChild(body);
+  page.dataset.idx=idx;
+  root.appendChild(page);
+});
+}
+
+// ---------- quote auto-fit ----------
+const MM=96/25.4;
+function fitQuote(page){
+  const M=MONTHS[+page.dataset.idx], q=page.querySelector('.q'), a=page.querySelector('.quote .a');
+  const max=(QMAX[M.art]||60)*MM; let pt=parseFloat(M.qsize);
+  q.style.fontSize=pt+'pt';
+  while(q.offsetHeight+a.offsetHeight+4.5*MM>max && pt>9){ pt-=0.5; q.style.fontSize=pt+'pt'; }
+}
+const fitAll=()=>document.querySelectorAll('.page').forEach(fitQuote);
+
+// ---------- editing (saved in this browser) ----------
+const STORE='kalenteri-lainaus-2027';
+let edits={};
+try{ edits=JSON.parse(localStorage.getItem(STORE)||'{}')||{}; }catch(e){ edits={}; }
+const save=()=>{ try{ localStorage.setItem(STORE,JSON.stringify(edits)); }catch(e){} };
+function applyEdits(){
+  document.querySelectorAll('[data-k]').forEach(el=>{
+    if(!('orig' in el.dataset)) el.dataset.orig=el.textContent;
+    if(el.dataset.k in edits) el.textContent=edits[el.dataset.k];
+  });
+}
+function setEditing(on){
+  document.body.classList.toggle('editing',on);
+  document.querySelectorAll('[data-k]').forEach(el=>{ on?el.setAttribute('contenteditable','plaintext-only'):el.removeAttribute('contenteditable'); });
+  const b=document.getElementById('btnEdit'); if(b) b.textContent=on?'✓ Valmis':'✎ Muokkaa';
+}
+document.addEventListener('input',e=>{
+  const el=e.target.closest('[data-k]'); if(!el) return;
+  const v=el.textContent;
+  if(v===el.dataset.orig) delete edits[el.dataset.k]; else edits[el.dataset.k]=v;
+  save();
+  const pg=el.closest('.page'); if(el.classList.contains('q')||el.classList.contains('a')) fitQuote(pg);
+});
+document.addEventListener('keydown',e=>{
+  const el=e.target.closest&&e.target.closest('[data-k]');
+  if(el && e.key==='Enter' && !el.classList.contains('note')){ e.preventDefault(); el.blur(); }
+});
+
+// ---------- start ----------
+setTimeout(()=>{
+  build(); applyEdits();
+  const done=()=>{ fitAll(); document.body.classList.add('ready'); };
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(done,done);
+  const bar=document.getElementById('bar');
+  document.getElementById('btnEdit').onclick=()=>setEditing(!document.body.classList.contains('editing'));
+  document.getElementById('btnPrint').onclick=()=>{ setEditing(false); window.print(); };
+  document.getElementById('btnReset').onclick=()=>{
+    if(!confirm('Palautetaanko kaikki alkuperäiset tekstit? Omat muutoksesi poistetaan.')) return;
+    edits={}; save();
+    document.querySelectorAll('[data-k]').forEach(el=>{ el.textContent=el.dataset.orig; });
+    fitAll();
+  };
+},30);
+</script>
+</body>
+</html>
